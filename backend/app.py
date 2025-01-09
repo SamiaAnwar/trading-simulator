@@ -1,5 +1,6 @@
-from flask import Flask, request, jsonify
-import pickle
-import yfinance as yf
-from alpaca_trade_api import REST
-import pandas as pd
+from app import create_app
+
+app = create_app()
+
+if __name__ == "__main__":
+    app.run(debug=True)
