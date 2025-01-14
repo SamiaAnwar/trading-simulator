@@ -1,11 +1,11 @@
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
-from historical_data import fetch_historical_data, combineSymbols
-from model_assessment import feature_importance, model_metrics
-
+from model.historical_data import fetch_historical_data, combineSymbols
+from model.model_assessment import feature_importance, model_metrics
+from datetime import date, timedelta
 def train(symbols, features):
-    data = fetch_historical_data(symbols, features, '2025-01-07', '5d')
+    data = fetch_historical_data(symbols, features, date.today() - timedelta(7), '5d')
     data = combineSymbols(data)
 
     X = data[features]
