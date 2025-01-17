@@ -40,14 +40,15 @@ def model_metrics(model, X_test, y_test):
     r2 = r2_score(y_test, y_pred)
     print(f"R-squared: {r2}")
 
-def model_visualisation(model, symbols, time, X_test, y_test):
+def model_visualisation(model, symbols, X_test, y_test):
     y_pred = model.predict(X_test)
+    print(type(y_test))
     print(y_test['NVDA'].shape)
     print(y_pred[:, 0].shape)
-
+    y_test = y_test.reset_index()
     for i, s in enumerate(symbols):
         plt.plot(y_test[s],label='actual')
-        plt.plot(y_pred[:, i], label='predicted') 
+        plt.plot(y_pred[:,i], label='predicted') 
         plt.xlabel('Time')
         plt.ylabel('Closing Price')
         plt.legend(loc="upper left")

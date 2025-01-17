@@ -28,9 +28,6 @@ def fetch_historical_data(symbols, features, start_date, duration):
         df.replace([float('inf'), float('-inf')], float('nan'), inplace=True)
         df.dropna(inplace=True)
 
-        #scaler = StandardScaler()
-        #df[features] = scaler.fit_transform(df[features])
-
         historical_data[symbol] = df
     
     return historical_data
