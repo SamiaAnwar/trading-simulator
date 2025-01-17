@@ -23,11 +23,13 @@ def fetch_historical_data(symbols, features, start_date, duration):
                     df['Volume_Change'] = df['Volume'].pct_change()
                 case 'Close_Change':       
                     df['Close_Change'] = df['Close'].pct_change() 
+                case 'Datetime':
+                    df['Datetime'] = df['Datetime'].astype(str)
         df.replace([float('inf'), float('-inf')], float('nan'), inplace=True)
         df.dropna(inplace=True)
 
-        scaler = StandardScaler()
-        df[features] = scaler.fit_transform(df[features])
+        #scaler = StandardScaler()
+        #df[features] = scaler.fit_transform(df[features])
 
         historical_data[symbol] = df
     

@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
+import numpy as np 
 
 def feature_importance(model, features):
 
@@ -39,3 +40,16 @@ def model_metrics(model, X_test, y_test):
     r2 = r2_score(y_test, y_pred)
     print(f"R-squared: {r2}")
 
+def model_visualisation(model, symbols, time, X_test, y_test):
+    y_pred = model.predict(X_test)
+    print(y_test['NVDA'].shape)
+    print(y_pred[:, 0].shape)
+
+    for i, s in enumerate(symbols):
+        plt.plot(y_test[s],label='actual')
+        plt.plot(y_pred[:, i], label='predicted') 
+        plt.xlabel('Time')
+        plt.ylabel('Closing Price')
+        plt.legend(loc="upper left")
+        plt.title(f'Predicted Closing vs. Actual for {s}')
+        plt.show()
