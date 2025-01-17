@@ -2,10 +2,10 @@ import yfinance as yf
 from sklearn.preprocessing import StandardScaler
 import pandas as pd
 
-def fetch_historical_data(symbols, features, start_date, duration):
+def fetch_historical_data(symbols, features, start_date, end_date):
     historical_data = {}
     for symbol in symbols:
-        df = yf.download(symbol, start=start_date, period=duration, interval='1m')
+        df = yf.download(symbol, start=start_date, end=end_date, interval='1d')
         df.reset_index(inplace=True)
         for feature in features:
             match feature:
@@ -38,7 +38,7 @@ def combineSymbols(features):
         if combined is None :
             combined = df
         else:
-            combined = pd.merge(combined, df, on='Datetime', suffixes=('', f'_{s}'))
+            #combined = pd.merge(combined, df, on='Datetime', suffixes=('', f'_{s}'))
 
-            #combined = pd.merge(combined, df, on='Datetime', how='outer', suffixes=('', f'_{s}'))
+            combined = pd.merge(combined, df, on='Date', how='outer', suffixes=('', f'_{s}'))
     return combined
