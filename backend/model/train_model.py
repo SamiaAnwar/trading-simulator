@@ -9,7 +9,8 @@ from datetime import date, timedelta
 
 def train(symbols, features):
     #Fetching Data from Past Week 
-    data = fetch_historical_data(symbols, features, date.today() - timedelta(365*2), date.today() - timedelta(1))
+    #data = fetch_historical_data(symbols, features, date.today() - timedelta(365*2), date.today() - timedelta(1))
+    data = fetch_historical_data(symbols, features, date.today() - timedelta(7), date.today() - timedelta(1))
     data = combineSymbols(data)
 
     X = data[features]
@@ -36,8 +37,7 @@ def train(symbols, features):
     lrmodel.fit(X_train_selected, y_train)
     X_test_selected = X_test[selected_features]
 
-    model_metrics(rfmodel, X_test_selected, y_test)
-
-    model_visualisation(rfmodel, symbols, X[selected_features].iloc[:50,:], y.iloc[:50,:])
+    #model_metrics(rfmodel, X_test_selected, y_test)
+    #model_visualisation(rfmodel, symbols, X[selected_features].iloc[:50,:], y.iloc[:50,:])
 
     return rfmodel, selected_features
