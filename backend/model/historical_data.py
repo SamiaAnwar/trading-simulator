@@ -39,6 +39,5 @@ def combineSymbols(features):
             combined = df
         else:
             #combined = pd.merge(combined, df, on='Datetime', suffixes=('', f'_{s}'))
-
             combined = pd.merge(combined, df, on='Date', how='outer', suffixes=('', f'_{s}'))
     return combined
