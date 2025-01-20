@@ -1,5 +1,4 @@
 import yfinance as yf 
-from sklearn.preprocessing import StandardScaler
 import pandas as pd
 
 def fetch_historical_data(symbols, features, start_date, end_date):
