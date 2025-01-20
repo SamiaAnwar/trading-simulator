@@ -5,7 +5,9 @@ import pandas as pd
 def fetch_historical_data(symbols, features, start_date, end_date):
     historical_data = {}
     for symbol in symbols:
-        df = yf.download(symbol, start=start_date, end=end_date, interval='1m')
+        #df = yf.download(symbol, start=start_date, end=end_date, interval='1m')
+        #df = yf.download(symbol, start=start_date, end=end_date, interval='1d')
+        df = yf.Ticker(symbol).history(start=start_date, end=end_date, interval='1d')
         df.reset_index(inplace=True)
         for feature in features:
             match feature:
@@ -27,8 +29,11 @@ def fetch_historical_data(symbols, features, start_date, end_date):
                     df['Datetime'] = df['Datetime'].astype(str)
         df.replace([float('inf'), float('-inf')], float('nan'), inplace=True)
         df.dropna(inplace=True)
-
-        historical_data[symbol] = df
+        if len(historical_data) == 0:
+            historical_data = pd.DataFrame(df)
+        else: 
+            historical_data = pd.concat([historical_data, pd.DataFrame(df)], ignore_index=True)
+        #historical_data[symbol] = df
     
     return historical_data
 
@@ -38,6 +43,6 @@ def combineSymbols(features):
         if combined is None :
             combined = df
         else:
-            combined = pd.merge(combined, df, on='Datetime', suffixes=('', f'_{s}'))
-            #combined = pd.merge(combined, df, on='Date', how='outer', suffixes=('', f'_{s}'))
+            #combined = pd.merge(combined, df, on='Datetime', suffixes=('', f'_{s}'))
+            combined = pd.merge(combined, df, on='Date', how='outer', suffixes=('', f'_{s}'))
     return combined

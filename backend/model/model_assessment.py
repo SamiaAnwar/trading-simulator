@@ -42,15 +42,15 @@ def model_metrics(model, X_test, y_test):
     print(f"R-squared: {r2}")
 
 def model_visualisation(model, symbols, X_test, y_test):
-    X_test = X_test.sort_index()
+    #X_test = X_test.sort_index()
     y_pred = model.predict(X_test)
-    y_test = y_test.sort_index().reset_index()
+    #y_test = y_test.sort_index().reset_index()
 
-    for i, s in enumerate(symbols):
-        plt.plot(y_test[s],label='actual')
-        plt.plot(y_pred[:,i], label='predicted') 
-        plt.xlabel('Time')
-        plt.ylabel('Closing Price')
-        plt.legend(loc="upper left")
-        plt.title(f'Predicted Closing vs. Actual for {s}')
-        plt.show()
+    
+    plt.plot(y_test,label='actual')
+    plt.plot(y_pred, label='predicted') 
+    plt.xlabel('Time')
+    plt.ylabel('Closing Price')
+    plt.legend(loc="upper left")
+    plt.title(f'Predicted Closing vs. Actual')
+    plt.show()
