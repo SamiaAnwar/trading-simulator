@@ -3,12 +3,15 @@ import pandas as pd
 from datetime import date, timedelta
 
 
-FEATURES = ['MA_5', 'MA_10', 'Volume_Change', 'Close_Change', 'EMA_5', 'Lag_1', 'Lag_2', 'Close', 'Volume']
+#FEATURES = ['MA_5', 'MA_10', 'Volume_Change', 'Close_Change', 'EMA_5', 'Lag_1', 'Lag_2', 'Close', 'Volume']
+FEATURES = ['Close', 'EMA_5', 'MA_5', 'Lag_2', 'MA_10', 'Lag_1']
+
 def get_live_data(symbols):
     data = {}
     for symbol in symbols:
 
         #Fetching Live Data 
+        #df = yf.Ticker(symbol).history(start=date.today() - timedelta(52), end=date.today() - timedelta(31), interval='1d')
         df = yf.Ticker(symbol).history(start=date.today() - timedelta(22), end=date.today() - timedelta(1), interval='1d')
         df.reset_index(inplace=True)
         
