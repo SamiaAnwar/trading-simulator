@@ -11,7 +11,7 @@ def get_live_data(symbols):
     for symbol in symbols:
 
         #Fetching Live Data 
-        #df = yf.Ticker(symbol).history(start=date.today() - timedelta(52), end=date.today() - timedelta(31), interval='1d')
+        #df = yf.Ticker(symbol).history(start=date.today() - timedelta(85), end=date.today() - timedelta(64), interval='1d')
         df = yf.Ticker(symbol).history(start=date.today() - timedelta(22), end=date.today() - timedelta(1), interval='1d')
         df.reset_index(inplace=True)
         
