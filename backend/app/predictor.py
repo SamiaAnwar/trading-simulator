@@ -16,11 +16,37 @@ def predict(inputs):
     if model is None:
         return {"status": "error", "message": "Model not loaded"}
     
+    predictions = {}
     for symbol in inputs:
         data = inputs[symbol]
         df = pd.DataFrame(eval(data), index=[1])
         prediction = model.predict(df)
-        print("Today's Close:" + df['Close'].to_string(index=False) + " Next month prediction: " + str(prediction))
+        #print("Today's Close:" + df['Close'].to_string(index=False) + " Next month prediction: " + str(prediction))
+        predictions[symbol] = {'CURR_CLOSE': float(df['Close'].iloc[0]), 'PRED_CLOSE': prediction[0]}
+    
+    return predictions
 
+def trade_decision(predictions, buy_threshold=0.05, sell_threshold=0.05, transaction_cost=0.005):
+
+    decisions = {}
+
+    for symbol in predictions:
+        curr_price = predictions[symbol]['CURR_CLOSE']
+        future_price = predictions[symbol]['PRED_CLOSE']
+
+        absolute_buy_threshold = (buy_threshold + transaction_cost)*curr_price
+        absolute_sell_threshold = (sell_threshold + transaction_cost)*curr_price
+
+        price_diff = future_price - curr_price
+
+        if price_diff > absolute_buy_threshold:
+            decisions[symbol] = 'BUY'
+        elif (-1)*price_diff > absolute_sell_threshold:
+            decisions[symbol] = 'SELL'
+        else:
+            decisions[symbol] = 'HOLD'
+
+    return decisions
 input = get_live_data(['AAPL', 'GOOG'])
-predict(input)
+p = predict(input)
+print(trade_decision(p))
