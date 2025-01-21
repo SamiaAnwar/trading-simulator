@@ -17,6 +17,7 @@ def train(symbols, features):
 
     X = data[features]
     y = data['Close'].shift(-30).dropna()
+    #y = (data['Close'].shift(-21) > data['Close']).astype(int).dropna() / X = X[:-21]
     X = X[:-30]
 
     print(X.shape)
