@@ -9,8 +9,14 @@ with open( path + '/Desktop/stock-market-predictor/backend/model/predictor_model
     model = pickle.load(f)
 FEATURES = ["Close", "EMA_5", "MA_5", "Lag_2", "MA_10", "Lag_1"]
 
+def predict(daily_feature):
+    if model is None:
+        return {"status": "error", "message": "Model not loaded"}
+    prediction = model.predict(daily_feature)
+    return {'CURR_CLOSE': float(daily_feature['Close'].iloc[0]), 'PRED_CLOSE': prediction[0]}
+    
 #Outputs predicted future close price and current features 
-def predict(inputs):
+def predict_all(inputs):
     if model is None:
         return {"status": "error", "message": "Model not loaded"}
     
