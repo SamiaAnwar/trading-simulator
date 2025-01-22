@@ -4,8 +4,6 @@ import json
 import pandas as pd   
 from io import StringIO
 
-from data_fetcher import get_live_data
-
 path = os.environ['HOME']
 with open( path + '/Desktop/stock-market-predictor/backend/model/predictor_model.pkl', 'rb') as f:
     model = pickle.load(f)
@@ -47,6 +45,3 @@ def trade_decision(predictions, buy_threshold=0.05, sell_threshold=0.05, transac
             decisions[symbol] = 'HOLD'
 
     return decisions
-input = get_live_data(['AAPL', 'GOOG'])
-p = predict(input)
-print(trade_decision(p))
