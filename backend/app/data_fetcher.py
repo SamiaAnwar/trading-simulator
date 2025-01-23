@@ -36,7 +36,7 @@ def get_features(data, features):
 def get_live_data(symbol, start, end):
     df = yf.Ticker(symbol).history(start=start, end=end, interval='1d')
     df.reset_index(inplace=True)
-    return df['Close']
+    return df['Close'], df['Date']
 
 def get_live_data_features(symbols):
     data = {}
