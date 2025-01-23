@@ -48,11 +48,12 @@ def backtest(symbols):
         for symbol in symbols: 
             trade = {}
             execute_trade(portfolio, symbol, decisions[symbol][i], 1, curr_mo[symbol][i])
-            trade['symbol'] = symbol
-            trade['action'] = decisions[symbol][i]
-            trade['date'] = dates[i]
-            trade['price'] = curr_mo[symbol][i]
-            trade_history.append(trade)
+            if decisions[symbol][i] != 'HOLD':
+                trade['symbol'] = symbol
+                trade['action'] = decisions[symbol][i]
+                trade['date'] = dates[i]
+                trade['price'] = curr_mo[symbol][i]
+                trade_history.append(trade)
         portfolio_values[i] = (calculate_portfolio_value(portfolio, curr_mo, i))
 
     return portfolio_values, trade_history
