@@ -1,6 +1,6 @@
-from data_fetcher import get_live_data, get_features
-from predictor import predict, trade_decision
-from trade import portfolio, execute_trade, calculate_portfolio_value
+from app.data_fetcher import get_live_data, get_features
+from app.predictor import predict, trade_decision
+from app.trade import portfolio, execute_trade, calculate_portfolio_value
 from datetime import date, timedelta
 import pandas as pd
 
@@ -9,7 +9,7 @@ import pandas as pd
 FEATURES = ['Close', 'EMA_5', 'MA_5', 'Lag_2', 'MA_10', 'Lag_1']
 
 def backtest(symbols):
-    
+
     # 1) Get features from [31, 60] trading days ago
     past_features = {} #Contains daily datapoints from the past ~30 trading days 
     for symbol in symbols:
@@ -56,5 +56,3 @@ def backtest(symbols):
         portfolio_values[i] = (calculate_portfolio_value(portfolio, curr_mo, i))
 
     return portfolio_values, trade_history
-
-backtest(["RIVN", "TSLA", "AAPL"])
