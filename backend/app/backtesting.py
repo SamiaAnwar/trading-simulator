@@ -44,7 +44,7 @@ def backtest(symbols):
     # 4) Execute a trade using price from 3) and decision from 2) 
     portfolio_values = [0]*30
     trade_history = []
-    for i in range(len(decisions[symbol])):
+    for i in range(30):
         for symbol in symbols: 
             trade = {}
             execute_trade(portfolio, symbol, decisions[symbol][i], 1, curr_mo[symbol][i])
@@ -54,6 +54,6 @@ def backtest(symbols):
                 trade['date'] = dates[i]
                 trade['price'] = curr_mo[symbol][i]
                 trade_history.append(trade)
-        portfolio_values[i] = (calculate_portfolio_value(portfolio, curr_mo, i))
+        portfolio_values[i] = (dates[i], calculate_portfolio_value(portfolio, curr_mo, i))
 
     return portfolio_values, trade_history
