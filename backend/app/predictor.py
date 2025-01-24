@@ -15,7 +15,23 @@ def predict(daily_feature):
     prediction = model.predict(daily_feature)
     return {'CURR_CLOSE': float(daily_feature['Close'].iloc[0]), 'PRED_CLOSE': prediction[0]}
 
-def trade_decision(predictions, buy_threshold=0.05, sell_threshold=0.05, transaction_cost=0.005):
+def trade_decision(prediction, buy_threshold=0.05, sell_threshold=0.05, transaction_cost=0.005):
+    curr_price = prediction['CURR_CLOSE']
+    future_price = prediction['PRED_CLOSE']
+
+    absolute_buy_threshold = (buy_threshold + transaction_cost)*curr_price
+    absolute_sell_threshold = (sell_threshold + transaction_cost)*curr_price
+
+    price_diff = future_price - curr_price
+
+    if price_diff > absolute_buy_threshold:
+        return 'BUY'
+    elif (-1)*price_diff > absolute_sell_threshold:
+        return 'SELL'
+    else:
+        return 'HOLD'
+
+def trade_decision_allPred(predictions, buy_threshold=0.05, sell_threshold=0.05, transaction_cost=0.005):
     #Can potentially associate it with date (?) 
     decisions = []
     for prediction in predictions:
