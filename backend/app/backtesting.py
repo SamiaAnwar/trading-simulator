@@ -26,9 +26,8 @@ def trades(symbols):
             feature_data = get_features(df[i:i+10], FEATURES)
             sym_feats.append(feature_data)
         past_features[symbol] = sym_feats
-        sym_date.reindex()
         dates[symbol] = sym_date
-
+    
     # 2) Make Predictions, Decisions and record the trade 
     #predictions = {} 
     #decisions = {} 
@@ -44,7 +43,7 @@ def trades(symbols):
                 trade = {}
                 trade['symbol'] = symbol
                 trade['action'] = action
-                trade['date'] = dates[symbol][i + 29]
+                trade['date'] = dates[symbol].iloc[i]
                 trade['price'] = prediction['CURR_CLOSE']
                 trade_history.append(trade)
             #daily_prediction.append(prediction)
