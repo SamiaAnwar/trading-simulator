@@ -23,10 +23,16 @@ function App() {
 
   })
   return (
-    <div style={{ padding: "20px" }}>
-      <h1>Stock Market Predictor</h1>
-      <LineGraph data={portfolioData} />
-      <DataTable data={tradeData} />
+    <div className="min-h-screen bg-gray-100 p-6">
+      <h1 className="text-3xl font-bold text-center text-blue-500 mb-8">
+        Stock Market Predictor
+      </h1>
+      <div className='bg-white p-6 shadow-lg rounded-lg'>
+        <LineGraph data={portfolioData} />
+      </div>
+      <div className='mt-6 bg-white p-6 shadow-lg rounded-lg'>
+        <DataTable data={tradeData} />
+      </div>
     </div>
   );
 }

@@ -48,9 +48,11 @@ const LineGraph = ({ data }) => {
         },
     };
     return (
-        <div style={{ marginBottom: '30px' }}>
-            <h2> Portfolio Value </h2>
-            <Line data={charData} options={options} />
+        <div className="mb-6">
+            <h2 className="text-xl font-semibold text-gray-700 mb-4"> Portfolio Value </h2>
+            <div className="relative">
+                <Line data={charData} options={options} />
+            </div>
         </div>
     ); 
 }

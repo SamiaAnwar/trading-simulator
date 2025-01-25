@@ -24,40 +24,50 @@ const DataTable = ({ data }) => {
 
     return (
         <div>
-            <h2> Trade Action</h2>
-            <table {...getTableProps()} style={{ border: "1px solid black", width: "100%" }}>
-                <thead>
-                    {headerGroups.map(headerGroup => (
-                        <tr {...headerGroup.getHeaderGroupProps()}>
-                            {headerGroup.headers.map(column => (
-                                <th
-                                    {...column.getHeaderProps()}
-                                    style={{ border: "1px solid black", padding: "8px" }}
-                                >
-                                    {column.render("Header")}
-                                </th>
-                            ))}
-                        </tr>
-                    ))}
-                </thead>
-                <tbody {...getTableBodyProps()}>
-                    {rows.map(row => {
-                        prepareRow(row);
-                        return (
-                            <tr {...row.getRowProps()} >
-                                {row.cells.map(cell => (
-                                    <td
-                                        {...cell.getCellProps()}
+            <h2 className="text-xl font-semibold text-gray-700 mb-4"> Trade Action</h2>
+            <div className="overflow-x-auto">
+                <table
+                    {...getTableProps()} style={{ border: "1px solid black", width: "100%" }}
+                    className="min-w-full table-auto border-collapse border border-gray-300"
+                >
+                    <thead className="bg-gray-100">
+                        {headerGroups.map(headerGroup => (
+                            <tr {...headerGroup.getHeaderGroupProps()}>
+                                {headerGroup.headers.map(column => (
+                                    <th
+                                        {...column.getHeaderProps()}
                                         style={{ border: "1px solid black", padding: "8px" }}
+                                        className="border border-gray-300 px-4 py-2 text-left text-sm font-medium text-gray-600"
                                     >
-                                        {cell.render("Cell")}
-                                    </td>
+                                        {column.render("Header")}
+                                    </th>
                                 ))}
                             </tr>
-                        );
-                    })}
-                </tbody>
-            </table>
+                        ))}
+                    </thead>
+                    <tbody {...getTableBodyProps()}>
+                        {rows.map(row => {
+                            prepareRow(row);
+                            return (
+                                <tr
+                                    {...row.getRowProps()}
+                                    className="hover:bg-gray-50"
+                                >
+                                    {row.cells.map(cell => (
+                                        <td
+                                            {...cell.getCellProps()}
+                                            style={{ border: "1px solid black", padding: "8px" }}
+                                            className="border border-gray-300 px-4 py-2 text-sm text-gray-700"
+                                        >
+                                            {cell.render("Cell")}
+                                        </td>
+                                    ))}
+                                </tr>
+                            );
+                        })}
+                    </tbody>
+                </table>
+            </div>
         </div>
     );
 }; 
