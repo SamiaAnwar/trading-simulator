@@ -73,7 +73,7 @@ def trades(symbols):
     #             trade['price'] = curr_mo[symbol][i]
     #             trade_history.append(trade)
     #     portfolio_values[i] = (dates[i], calculate_portfolio_value(portfolio, curr_mo, i))
-
+    trade_history = sorted(trade_history, key=lambda d: d['date'])
     return trade_history
 
 def portfolio_value(symbols): 
