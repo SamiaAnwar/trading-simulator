@@ -12,11 +12,14 @@ const TradingResults = () => {
     const [tradeData, setTradeData] = useState([]);
 
     useEffect(() => {
-        axios.get(`/backtest?symbol=${query}`).then(response => (
+
+        axios.get(`/backtest/trade_history?symbol=${query}`).then(response => (
             setTradeData(response.data)
         )).catch(error => {
-            console.error("Error fetching trading data:", error);
-        }).then(response => (
+            console.error("Error fetching portfolio data:", error);
+        });
+
+        axios.get(`/backtest/portfolio_data?symbol=${query}`).then(response => (
             setPortfolioData(response.data)
         )).catch(error => {
             console.error("Error fetching portfolio data:", error);
