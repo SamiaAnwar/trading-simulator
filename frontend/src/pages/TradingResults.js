@@ -12,19 +12,20 @@ const TradingResults = () => {
     const [tradeData, setTradeData] = useState([]);
 
     useEffect(() => {
-
         axios.get(`/backtest/trade_history?symbol=${query}`).then(response => (
             setTradeData(response.data)
         )).catch(error => {
-            console.error("Error fetching portfolio data:", error);
+            console.error("Error fetching trading data:", error);
         });
+    }, []); 
 
+    useEffect(() => {
         axios.get(`/backtest/portfolio_data?symbol=${query}`).then(response => (
             setPortfolioData(response.data)
         )).catch(error => {
             console.error("Error fetching portfolio data:", error);
         });
-    }, []); 
+    },[tradeData] )
     return (
         <div className="min-h-screen bg-gray-100 p-6">
           <h1 className="text-3xl font-bold text-center text-blue-500 mb-8">
