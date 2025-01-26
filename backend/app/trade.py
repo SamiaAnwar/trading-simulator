@@ -3,6 +3,13 @@ portfolio = {
     'stocks': {},  # Stock holdings
     'trade_history': []  # Log of trades
 }
+
+def portfolio_reset():
+    portfolio['cash'] = 10000
+    portfolio['stocks'] = {}
+    portfolio['trade_history'] = []
+
+
 def execute_trade(portfolio, symbol, action, quantity, price):
     if action == 'BUY':
         total_cost = quantity * price
