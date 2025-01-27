@@ -13,7 +13,7 @@ import pandas as pd
 FEATURES = ['Close', 'EMA_5', 'MA_5', 'Lag_2', 'MA_10', 'Lag_1']
 
 def trades(symbols):
-    portfolio_reset()
+    #portfolio_reset()
     # 1) Get features from [31, 60] trading days ago
     past_features = {} #Contains daily datapoints from the past ~30 trading days 
     dates = {}
@@ -28,9 +28,7 @@ def trades(symbols):
         past_features[symbol] = sym_feats
         dates[symbol] = sym_date
     
-    # 2) Make Predictions, Decisions and record the trade 
-    #predictions = {} 
-    #decisions = {} 
+    # 2) Make Predictions, Decisions and record the trade  
     trade_history = []
     for symbol in symbols:
         daily_prediction = [] 
@@ -46,33 +44,7 @@ def trades(symbols):
                 trade['date'] = dates[symbol].iloc[i]
                 trade['price'] = prediction['CURR_CLOSE']
                 trade_history.append(trade)
-            #daily_prediction.append(prediction)
-        #predictions[symbol] = daily_prediction
-        #decisions[symbol] = trade_decision(daily_prediction)
-
-    # 3) Get closing prices from [0, 30] days ago 
-    # curr_mo = {}
-    # for symbol in symbols:
-    #     curr_mo[symbol], dates = get_live_data(symbol, date.today() - timedelta(56), date.today())
-    #     curr_mo[symbol] = curr_mo[symbol].head(30)
-    #     dates = dates.head(30)
-    
-    # 4) Observe Portfolio Values Over The Next Month 
-    
-    # 4) Execute a trade using price from 3) and decision from 2) 
-    # portfolio_values = [0]*30
-    # trade_history = []
-    # for i in range(30):
-    #     for symbol in symbols: 
-    #         trade = {}
-    #         execute_trade(portfolio, symbol, decisions[symbol][i], 1, curr_mo[symbol][i])
-    #         if decisions[symbol][i] != 'HOLD':
-    #             trade['symbol'] = symbol
-    #             trade['action'] = decisions[symbol][i]
-    #             trade['date'] = dates[i]
-    #             trade['price'] = curr_mo[symbol][i]
-    #             trade_history.append(trade)
-    #     portfolio_values[i] = (dates[i], calculate_portfolio_value(portfolio, curr_mo, i))
+            
     trade_history = sorted(trade_history, key=lambda d: d['date'])
     return trade_history
 
@@ -89,4 +61,17 @@ def portfolio_value(symbols):
     
     return portfolio_values
 
-
+def compare_predictions(symbol):
+    #Get last month's closing prices
+    curr_mo, dates = get_live_data(symbol, date.today() - timedelta(56), date.today())
+    #Get month's closing prices from 2 months ago 
+    past_mo, _ = get_live_data(symbol, date.today() - timedelta(113+42), date.today() - timedelta(57))
+    past_mo = past_mo.tail(40)
+    pred_curr = [0]*30
+    for i in range(30):
+        features = get_features(past_mo[i:i+10], FEATURES)
+        prediction = predict(features.T)['PRED_CLOSE']
+        pred_curr[i] = prediction 
+    
+    output = [(dates.iloc[i], curr_mo.iloc[i], pred_curr[i]) for i in range(30)]
+    return output
