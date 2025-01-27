@@ -37,9 +37,9 @@ def trades(symbols):
         for i, day in enumerate(past_features[symbol]):
             prediction = predict(day.T)
             action = trade_decision(prediction)
-            execute_trade(portfolio, symbol, action, 1, prediction['CURR_CLOSE'])
+            executed = execute_trade(portfolio, symbol, action, 1, prediction['CURR_CLOSE'])
             
-            if action != 'HOLD':
+            if action != 'HOLD' and executed['status'] != 'failure':
                 trade = {}
                 trade['symbol'] = symbol
                 trade['action'] = action
