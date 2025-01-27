@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify
 import json
 from app.data_fetcher import get_live_data
 from app.predictor import predict, trade_decision
-from app.backtesting import trades, portfolio_value
+from app.backtesting import trades, portfolio_value, compare_predictions
 app_routes = Blueprint('app_routes', __name__)
 
 
@@ -33,3 +33,9 @@ def get_trade_data():
     symbols = request.args.getlist('symbol', type=str)
     trade_history = trades(symbols)
     return jsonify(trade_history)
+
+@app_routes.route('/backtest/prediction_comparison', methods=['GET', 'POST'])
+def prediction_comparison():
+    symbol = request.args.get('symbol', type=str)
+    predictions = compare_predictions(symbol)
+    return jsonify(predictions)
