@@ -13,7 +13,7 @@ import pandas as pd
 FEATURES = ['Close', 'EMA_5', 'MA_5', 'Lag_2', 'MA_10', 'Lag_1']
 
 def trades(symbols):
-    #portfolio_reset()
+    portfolio_reset()
     # 1) Get features from [31, 60] trading days ago
     past_features = {} #Contains daily datapoints from the past ~30 trading days 
     dates = {}
