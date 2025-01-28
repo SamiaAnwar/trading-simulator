@@ -15,7 +15,6 @@ const DataTable = ({ data }) => {
         data[i].date = new Date(data[i].date).toLocaleDateString();
         data[i].price = Math.round(data[i].price * 10000) / 10000;
     }
-    //const prices = data.map(item => item[2].toFixed(2));
     const tableInstance = useTable({ columns, data });
 
     const {

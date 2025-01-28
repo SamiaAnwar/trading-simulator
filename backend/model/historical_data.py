@@ -32,7 +32,6 @@ def fetch_historical_data(symbols, features, start_date, end_date):
             historical_data = pd.DataFrame(df)
         else: 
             historical_data = pd.concat([historical_data, pd.DataFrame(df)], ignore_index=True)
-        #historical_data[symbol] = df
     
     return historical_data
 

@@ -3,7 +3,6 @@ import pandas as pd
 from datetime import date, timedelta
 
 
-#FEATURES = ['MA_5', 'MA_10', 'Volume_Change', 'Close_Change', 'EMA_5', 'Lag_1', 'Lag_2', 'Close', 'Volume']
 FEATURES = ['Close', 'EMA_5', 'MA_5', 'Lag_2', 'MA_10', 'Lag_1']
 
 def get_features(data, features):
