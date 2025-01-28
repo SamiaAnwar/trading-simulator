@@ -23,7 +23,7 @@ const LineGraph = ({ data }) => {
             {
                 label: "Portfolio Value",
                 data: values,
-                borderColor: "rgba(75,192,192,1)",
+                borderColor: "lime",
                 backgroundColor: "rgba(75,192,192,0.2)",
                 tension: 0.4,
             },
@@ -36,14 +36,24 @@ const LineGraph = ({ data }) => {
             legend: {
                 display: true,
                 position: 'top',
-            },
+                color: 'white'
+            }
         },
         scales: {
             x: {
-                title: { display: true, text: "Date" },
+                display: true,
+                title: { display: true, text: "Date", color: 'white' },
+                grid: { color: 'white' },
+                ticks: {color: 'rgb(159, 159, 159)'},
             },
             y: {
-                title: { display: true, text: "Value(USD)" },
+                color: 'white',
+                display: true,
+                title: { display: true, text: "Value(USD)", color: 'white' },
+                grid: { color: 'white' },
+                labels: { color: 'white' },
+                ticks: {color: 'rgb(159, 159, 159)'},
+                
             },
         },
     };

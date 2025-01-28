@@ -12,7 +12,7 @@ const DropDown = ({ options, onSelect }) => {
                 id="dropdown"
                 value={selectedItem}
                 onChange={handleChange}
-                className="block w-1/4 bg-white border border-gray-300 rounded-md shadow-sm px-4 py-2 focus:outline-none focus:ring focus:ring-indigo-500 focus:border-indigo-500"
+                className="block w-1/4 bg-gray-900 border border-gray-300 rounded-md shadow-sm px-4 py-2 focus:outline-none focus:ring focus:ring-indigo-500 focus:border-indigo-500 text-white"
             >
                 {options.map((option, index) => (
                     <option key={index} value={option}>

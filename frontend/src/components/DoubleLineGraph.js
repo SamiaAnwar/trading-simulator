@@ -50,16 +50,19 @@ const DoubleLineGraph = ({ data }) => {
     },
     scales: {
       x: {
-        title: {
-          display: true,
-          text: "Date",
-        },
+        display: true,
+        title: { display: true, text: "Date", color: 'white' },
+        grid: { color: 'white' },
+        ticks: {color: 'rgb(159, 159, 159)'},
       },
       y: {
-        title: {
+          color: 'white',
           display: true,
-          text: "Price (USD)",
-        },
+          title: { display: true, text: "Price (USD)", color: 'white' },
+          grid: { color: 'white' },
+          labels: { color: 'white' },
+          ticks: {color: 'rgb(159, 159, 159)'},
+          
       },
     },
   };

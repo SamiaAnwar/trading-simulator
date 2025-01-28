@@ -42,25 +42,25 @@ const TradingResults = () => {
     });
   }, [selectedSym]);
   return (
-      <div className="min-h-screen bg-gray-100 p-6">
-        <h1 className="text-3xl font-bold text-center text-blue-500 mb-8">
+      <div className="min-h-screen bg-gray-900 p-6">
+        <h1 className="text-3xl font-bold text-center text-white mb-8">
           Stock Market Predictor
         </h1>
-        <div className="flex flex-row h-content space-x-4 bg-white">
-          <div className='min-h-full w-1/2 bg-white p-6 shadow-lg rounded-lg object-cover'>
-            <h2 className=" text-xl font-semibold text-gray-700 mb-4"> Portfolio Value </h2>
+        <div className="flex flex-row h-content space-x-4">
+          <div className='min-h-full w-1/2  bg-gray-900 p-6 shadow-green rounded-lg object-cover border border-white'>
+            <h2 className=" text-xl font-semibold text-white mb-4"> Portfolio Value </h2>
             <LineGraph data={portfolioData} />
           </div>
-          <div className='min-h-full w-1/2 bg-white p-6 shadow-lg rounded-lg object-cover'>
+          <div className='min-h-full w-1/2  bg-gray-900 p-6 shadow-green rounded-lg object-cover border border-white'>
             <div className="flex flex-row h-content justify-between">
-              <h2 className=" text-xl font-semibold text-gray-700 mb-4"> Model Accuracy </h2>
+              <h2 className=" text-xl font-semibold text-white mb-4"> Model Accuracy </h2>
               <DropDown options={selectedOptions} onSelect={handleSelect} />
             </div>
             <DoubleLineGraph data={compareData} />
           </div>
         </div>
       
-        <div className='mt-6 bg-white p-6 shadow-lg rounded-lg'>
+        <div className='mt-6 bg-gray-900 p-6 shadow-white rounded-lg object-cover border border-white'>
           <DataTable data={tradeData} />
         </div>
       </div>

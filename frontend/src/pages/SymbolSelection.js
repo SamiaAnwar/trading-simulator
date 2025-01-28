@@ -20,9 +20,9 @@ const SymbolSelection = () => {
     };
 
     return (
-        <div className='flex flex-col items-center justify-center h-screen bg-gray-100'>
-            <h1 className='test-2xl font-bold mb-4'> Selected Symbols </h1>
-            <div className="flex flex-wrap justify-center">
+        <div className='flex flex-col items-center justify-center h-screen bg-black'>
+            <h1 className='text-6xl text-white font-bold mb-4'> Select Tickers </h1>
+            <div className="flex flex-wrap justify-center w-3/5">
                 {options.map((option) => (
                     <ButtonSelector
                         key={option}
@@ -33,7 +33,7 @@ const SymbolSelection = () => {
                 ))}
             </div>
             <button
-                className="mt-4 px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-500 transition"
+                className="mt-4 px-6 py-2 bg-green-600 text-white rounded-full hover:bg-green-500 transition"
                 onClick={handleContinue}
                 disabled={selectedOptions.length === 0}
             >
