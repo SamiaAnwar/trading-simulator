@@ -13,7 +13,7 @@ const DataTable = ({ data }) => {
     );
     for (var i = 0; i < data.length; i++) {
         data[i].date = new Date(data[i].date).toLocaleDateString();
-        data[i].price = Math.round(data[i].price * 10000) / 10000;
+        data[i].price = Math.round(data[i].price * 1000) / 1000;
     }
     const tableInstance = useTable({ columns, data });
 
