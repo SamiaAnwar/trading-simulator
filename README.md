@@ -1,7 +1,5 @@
 # stock-market-predictor
 
-Data visualizer and trading simulator for a machine learning model to predict stock market prices 30 trading days in the future
-
 ## Objective
 The objective of this project is to create a tool which can aid in demystifying the statistical element of stock market prices to make trading more accessible to the average earner. 
 
