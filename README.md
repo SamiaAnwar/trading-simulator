@@ -20,3 +20,19 @@ https://github.com/user-attachments/assets/df130842-16a0-4c48-8d46-9e666e9f6f83
 ```sh
 $ cd frontend && npm i
 ```
+
+## How to Run  
+```sh
+$ cd frontend 
+```
+Then, in two different terminals
+```sh
+$ npm run start 
+```
+```sh
+$ npm run start-flask
+```
+## Next Steps 
+In the future, I plan on building a site to display live performance of this model on a simulated stock portfolio using the same business logic implemented for backtesting. I also hope to create an API for other programmers to be able to use this model. 
+
+
