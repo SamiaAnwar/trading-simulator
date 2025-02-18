@@ -16,6 +16,7 @@ def scheduled_update():
     portfolio, _ = supabase.table("Portfolio").select("*").eq("user_id", user).execute()
     cash = portfolio[1][0]['cash']
     holdings = portfolio[1][0]['holdings']
+    portfolio_reset(cash, holdings)
     #TODO: Make a decision
 
     #TODO: Update the databases (incl. PortfolioValues, Portfolio > holdings, Trades)

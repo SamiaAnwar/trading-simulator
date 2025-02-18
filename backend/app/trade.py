@@ -4,10 +4,10 @@ portfolio = {
     'trade_history': []  # Log of trades
 }
 
-def portfolio_reset():
-    portfolio['cash'] = 10000
-    portfolio['stocks'] = {}
-    portfolio['trade_history'] = []
+def portfolio_reset(cash=10000, stocks={}, trade_hist=[]):
+    portfolio['cash'] = cash
+    portfolio['stocks'] = stocks
+    portfolio['trade_history'] = trade_hist
 
 
 def execute_trade(portfolio, symbol, action, quantity, price):
