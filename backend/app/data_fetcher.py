@@ -69,6 +69,6 @@ def get_live_data_features(symbols):
         df.dropna(inplace=True)
 
         #Getting the latest 
-        data[symbol] = df[FEATURES].iloc[-1].to_json()
+        data[symbol] = pd.DataFrame(df[FEATURES].iloc[-1])
 
     return data

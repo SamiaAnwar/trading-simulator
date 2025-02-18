@@ -1,5 +1,8 @@
 from flask import Blueprint, request, jsonify
 from app.backtesting import trades, portfolio_value, compare_predictions
+from app.predictor import predict, trade_decision
+from app.data_fetcher import get_live_data_features
+from app.trade import portfolio_reset
 import os
 from supabase import create_client, Client
 
@@ -13,15 +16,27 @@ app_routes = Blueprint('app_routes', __name__)
 
 @app_routes.route('/live/scheduled_update', methods=['GET', 'PUT'])
 def scheduled_update():
+    #Get portfolio information 
     portfolio, _ = supabase.table("Portfolio").select("*").eq("user_id", user).execute()
     cash = portfolio[1][0]['cash']
-    holdings = portfolio[1][0]['holdings']
+    holdings = portfolio[1][0]['holdings_alt2']
     portfolio_reset(cash, holdings)
     #TODO: Make a decision
-
+    #1) Get features from relevant stocks
+    symbols = holdings.keys() #get symbols from holdings 
+    features_data = get_live_data_features(symbols)
+    #2) Make predictions and decisions from the feaatures 
+    decisions = {}
+    for symbol in symbols:
+        prediction = predict(features_data[symbol].T)
+        decisions[symbol] = trade_decision(prediction)
     #TODO: Update the databases (incl. PortfolioValues, Portfolio > holdings, Trades)
-    
-    return {'Hello':cash}
+    #for symbol, decision in decisions:
+        #if decision == 'BUY':
+            #Execute buy logic 
+        #if decision == 'SELL':
+            #Execute buy logic 
+    return jsonify(decisions)
 
 @app_routes.route('/live/portfolio', methods=['GET', 'POST'])
 def get_live_portfolio():
