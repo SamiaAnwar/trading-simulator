@@ -16,9 +16,9 @@ app_routes = Blueprint('app_routes', __name__)
 @app_routes.route('/live/scheduled_update', methods=['GET', 'PUT'])
 def scheduled_update():
     #Get portfolio information 
-    portfolio, _ = supabase.table("Portfolio").select("*").eq("user_id", user).execute()
-    cash = portfolio[1][0]['cash']
-    holdings = portfolio[1][0]['holdings_alt2']
+    pf, _ = supabase.table("Portfolio").select("*").eq("user_id", user).execute()
+    cash = pf[1][0]['cash']
+    holdings = pf[1][0]['holdings_alt2']
     portfolio_reset(cash, holdings)
     #TODO: Make a decision
     #1) Get features from relevant stocks
