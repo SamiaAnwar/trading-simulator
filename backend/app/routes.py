@@ -46,7 +46,7 @@ def scheduled_update():
                 supabase.table("Trades")
                 .insert(
                     {"user_id": user, 
-                    "ticker": symbol, 
+                    "symbol": symbol, 
                     "date":today, 
                     "value":live_prices[symbol][0], 
                     "action": action}
