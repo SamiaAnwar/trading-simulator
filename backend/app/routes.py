@@ -10,7 +10,6 @@ url: str = os.environ.get("SUPABASE_URL")
 key: str = os.environ.get("SUPABASE_KEY")
 supabase: Client = create_client(url, key)
 user = os.environ.get("USER_ID")
-user = 1
 
 app_routes = Blueprint('app_routes', __name__)
 
