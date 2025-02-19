@@ -2,9 +2,11 @@ from flask import Blueprint, request, jsonify
 from app.backtesting import trades, portfolio_value, compare_predictions
 from app.predictor import predict, trade_decision
 from app.data_fetcher import get_live_data_features
-from app.trade import portfolio_reset
+from app.trade import portfolio_reset, execute_trade, portfolio, calculate_portfolio_value
 import os
 from supabase import create_client, Client
+from datetime import date
+
 
 url: str = os.environ.get("SUPABASE_URL")
 key: str = os.environ.get("SUPABASE_KEY")
@@ -30,13 +32,48 @@ def scheduled_update():
     for symbol in symbols:
         prediction = predict(features_data[symbol].T)
         decisions[symbol] = trade_decision(prediction)
-    #TODO: Update the databases (incl. PortfolioValues, Portfolio > holdings, Trades)
-    #for symbol, decision in decisions:
-        #if decision == 'BUY':
-            #Execute buy logic 
-        #if decision == 'SELL':
-            #Execute buy logic 
-    return jsonify(decisions)
+        live_prices[symbol] = [prediction['CURR_CLOSE']]
+    #Update the databases (incl. PortfolioValues, Portfolio > holdings, cash, Trades)
+    today = str(date.today())
+    for symbol, decision in decisions.items():
+        action = -1 
+        if decision == 'BUY':
+            action = 1 
+        if decision == 'SELL':
+            action = 0 
+        if action != -1 and (portfolio['stocks'][symbol] > 0 or action == 1): 
+            #Add new trade to Trades
+            response = (
+                supabase.table("Trades")
+                .insert(
+                    {"user_id": user, 
+                    "ticker": symbol, 
+                    "date":today, 
+                    "value":live_prices[symbol][0], 
+                    "action": action}
+                )
+                .execute()
+                )
+        message = execute_trade(portfolio, symbol, decision, 1, live_prices[symbol][0])
+    value = calculate_portfolio_value(portfolio, live_prices, 0)
+    #Add new value to PortfolioValues 
+    response = (
+                supabase.table("PortfolioValues")
+                .insert(
+                    {"user_id": user,
+                    "date":today, 
+                    "value":value}
+                )
+                .execute()
+                )
+    #Update cash and holdings value 
+    response = (
+        supabase.table("Portfolio")
+        .update({"cash": portfolio['cash'], "holdings":portfolio["stocks"]})
+        .eq("user_id", user)
+        .execute()
+    )
+    return jsonify(portfolio)
 
 @app_routes.route('/live/portfolio', methods=['GET', 'POST'])
 def get_live_portfolio():
