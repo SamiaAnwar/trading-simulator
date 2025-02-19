@@ -44,7 +44,7 @@ const TradingResults = () => {
   return (
       <div className="min-h-screen bg-gray-900 p-6">
         <h1 className="text-3xl font-bold text-center text-white mb-8">
-          Stock Market Predictor
+          Backtesting Results
         </h1>
         <div className="flex flex-row h-content space-x-4">
           <div className='min-h-full w-1/2  bg-gray-900 p-6 shadow-green rounded-lg object-cover border border-white'>
