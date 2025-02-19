@@ -22,18 +22,17 @@ def scheduled_update():
     cash = pf[1][0]['cash']
     holdings = pf[1][0]['holdings_alt2']
     portfolio_reset(cash, holdings)
-    # Make a decision
-    #1) Get features from relevant stocks
+    #Get features from relevant stocks
     symbols = list(holdings.keys()) #get symbols from holdings 
     features_data = get_live_data_features(symbols)
-    #2) Make predictions and decisions from the feaatures 
+    #Make predictions and decisions from the feaatures 
     decisions = {}
     live_prices = {}
     for symbol in symbols:
         prediction = predict(features_data[symbol].T)
         decisions[symbol] = trade_decision(prediction)
         live_prices[symbol] = [prediction['CURR_CLOSE']]
-    #Update the databases (incl. PortfolioValues, Portfolio > holdings, cash, Trades)
+    #Execute the trade internally 
     today = str(date.today())
     for symbol, decision in decisions.items():
         action = -1 
@@ -77,20 +76,17 @@ def scheduled_update():
 
 @app_routes.route('/live/portfolio', methods=['GET', 'POST'])
 def get_live_portfolio():
-    #TODO: Fetch from portfolio table   
     portfolio, _ = supabase.table("Portfolio").select("*").eq("user_id", user).execute()
     holdings = portfolio[1][0]['holdings']
     return holdings
 
 @app_routes.route('/live/value_history', methods=['GET', 'POST'])
 def get_value_history():
-    #TODO: Fetch from value history table  
     values, _ = supabase.table("PortfolioValues").select("value, date").eq("user_id", user).execute()
     return jsonify(values[1])
 
 @app_routes.route('/live/trade_history', methods=['GET', 'POST'])
 def get_trade_history():
-    #TODO: Fetch from trade history table  
     trades, _ = supabase.table("Trades").select("ticker, date, value").eq("user_id", user).execute()
     return jsonify(trades[1])
 
