@@ -26,6 +26,7 @@ def scheduled_update():
     features_data = get_live_data_features(symbols)
     #2) Make predictions and decisions from the feaatures 
     decisions = {}
+    live_prices = {}
     for symbol in symbols:
         prediction = predict(features_data[symbol].T)
         decisions[symbol] = trade_decision(prediction)
