@@ -20,9 +20,9 @@ def scheduled_update():
     cash = pf[1][0]['cash']
     holdings = pf[1][0]['holdings_alt2']
     portfolio_reset(cash, holdings)
-    #TODO: Make a decision
+    # Make a decision
     #1) Get features from relevant stocks
-    symbols = holdings.keys() #get symbols from holdings 
+    symbols = list(holdings.keys()) #get symbols from holdings 
     features_data = get_live_data_features(symbols)
     #2) Make predictions and decisions from the feaatures 
     decisions = {}
