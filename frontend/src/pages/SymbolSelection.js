@@ -20,7 +20,7 @@ const SymbolSelection = () => {
     };
 
     const handleContinue = () => {
-        navigate('/results', { state: { selectedOptions } });
+        navigate('/backtesting', { state: { selectedOptions } });
     };
 
     return (
