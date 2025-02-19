@@ -87,7 +87,7 @@ def get_value_history():
 
 @app_routes.route('/live/trade_history', methods=['GET', 'POST'])
 def get_trade_history():
-    trades, _ = supabase.table("Trades").select("ticker, date, value").eq("user_id", user).execute()
+    trades, _ = supabase.table("Trades").select("symbol, date, value, action").eq("user_id", user).execute()
     return jsonify(trades[1])
 
 @app_routes.route('/backtest/portfolio_data', methods=['GET', 'POST'])
