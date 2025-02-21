@@ -1,13 +1,14 @@
-import React, { useState, useEffect, use } from "react"; 
-import { useLocation } from "react-router"; 
+import React, { useState, useEffect } from "react"; 
 import LineGraph from "../components/LineGraph";
 import DataTable from "../components/DataTable";
+import DoughnutGraph from "../components/DoughnutGraph";
 import axios from "axios";
 
 
 const LiveResults=() => {
     const [valuesData, setValuesData] = useState([]);
     const [tradesData, setTradesData] = useState([]); 
+    const [holdingsData, setHoldingsData] = useState([]); 
     useEffect(() => {
         axios.get('/live/value_history').then(
             response => (
@@ -15,35 +16,47 @@ const LiveResults=() => {
             )
         ).catch(error => {
             console.error("Error fetching portfolio values data:", error);
-        })
-    }, [])
-
-    useEffect(() => {
+        }); 
         axios.get('/live/trade_history').then(
             response => (
                 setTradesData(response.data)
             )
         ).catch(error => {
-            console.error("Error fetching portfolio values data:", error);
+            console.error("Error fetching trading data:", error);
+        }); 
+        axios.get('/live/portfolio').then(
+            response => (
+                setHoldingsData(response.data)
+            )
+        ).catch(error => {
+            console.error("Error fetching holdings data:", error);
         })
     }, [])
+
     const tradesTableData = tradesData.map(item => ({
         ...item,
         action: item.action === 1 ? "BUY" : "SELL"
       }));
       
     const lineData = Object.values(valuesData).map(({ date, value }) => [date, value]);
+
+    const doughnutData = Object.entries(holdingsData); 
     
-    console.log(tradesData)
     return (
         <div className="min-h-screen bg-gray-900 p-6">
             <h1 className="text-3xl font-bold text-center text-white mb-8">
                 Live Trading Simulator
             </h1>
             <div className="flex flex-row h-content space-x-4">
-                <div className='min-h-full w-1/2  bg-gray-900 p-6 shadow-green rounded-lg object-cover border border-white'>
+                <div className='min-h-full w-2/3  bg-gray-900 p-6 shadow-green rounded-lg object-cover border border-white'>
                     <h2 className=" text-xl font-semibold text-white mb-4"> Portfolio Value </h2>
                     <LineGraph data={lineData} />
+                </div>
+                <div className='min-h-full w-1/3  bg-gray-900 p-6 shadow-green rounded-lg object-cover border border-white'>
+                    <div className="flex flex-row h-content justify-between">
+                        <h2 className=" text-xl font-semibold text-white mb-4"> Holdings Distribution </h2>
+                    </div>
+                    <DoughnutGraph data={ doughnutData } />
                 </div>
             </div>
             <div className='mt-6 bg-gray-900 p-6 shadow-white rounded-lg object-cover border border-white'>
