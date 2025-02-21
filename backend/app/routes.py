@@ -20,7 +20,7 @@ def scheduled_update():
     #Get portfolio information 
     pf, _ = supabase.table("Portfolio").select("*").eq("user_id", user).execute()
     cash = pf[1][0]['cash']
-    holdings = pf[1][0]['holdings_alt2']
+    holdings = pf[1][0]['holdings']
     portfolio_reset(cash, holdings)
     #Get features from relevant stocks
     symbols = list(holdings.keys()) #get symbols from holdings 
