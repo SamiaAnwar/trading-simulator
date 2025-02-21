@@ -43,23 +43,23 @@ const LiveResults=() => {
     const doughnutData = Object.entries(holdingsData); 
     
     return (
-        <div className="min-h-screen bg-gray-900 p-6">
+        <div className="min-h-screen bg-black p-6">
             <h1 className="text-3xl font-bold text-center text-white mb-8">
                 Live Trading Simulator
             </h1>
             <div className="flex flex-row h-content space-x-4">
-                <div className='min-h-full w-2/3  bg-gray-900 p-6 shadow-green rounded-lg object-cover border border-white'>
+                <div className='min-h-full w-2/3  bg-black p-6 shadow-green rounded-lg object-cover border border-white'>
                     <h2 className=" text-xl font-semibold text-white mb-4"> Portfolio Value </h2>
                     <LineGraph data={lineData} />
                 </div>
-                <div className='min-h-full w-1/3  bg-gray-900 p-6 shadow-green rounded-lg object-cover border border-white'>
+                <div className='min-h-full w-1/3  bg-black p-6 shadow-green rounded-lg object-cover border border-white'>
                     <div className="flex flex-row h-content justify-between">
                         <h2 className=" text-xl font-semibold text-white mb-4"> Holdings Distribution </h2>
                     </div>
                     <DoughnutGraph data={ doughnutData } />
                 </div>
             </div>
-            <div className='mt-6 bg-gray-900 p-6 shadow-white rounded-lg object-cover border border-white'>
+            <div className='mt-6 bg-black p-6 shadow-white rounded-lg object-cover border border-white'>
                 <DataTable data={tradesTableData} />
             </div>
         
