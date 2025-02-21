@@ -1,11 +1,11 @@
 from flask import Blueprint, request, jsonify
 from app.backtesting import trades, portfolio_value, compare_predictions
 from app.predictor import predict, trade_decision
-from app.data_fetcher import get_live_data_features
+from app.data_fetcher import get_live_data_features, get_live_data
 from app.trade import portfolio_reset, execute_trade, portfolio, calculate_portfolio_value
 import os
 from supabase import create_client, Client
-from datetime import date
+from datetime import date, timedelta 
 
 
 url: str = os.environ.get("SUPABASE_URL")
@@ -89,6 +89,12 @@ def get_value_history():
 def get_trade_history():
     trades, _ = supabase.table("Trades").select("symbol, date, price, action").eq("user_id", user).execute()
     return jsonify(trades[1])
+
+@app_routes.route('/live/daily_prices', methods=['GET', 'POST'])
+def get_daily_prices():
+    symbol = request.args.get("symbol")
+    curr_mo, dates = get_live_data(symbol, date.today() - timedelta(56), date.today())
+    return jsonify([curr_mo, dates])
 
 @app_routes.route('/backtest/portfolio_data', methods=['GET', 'POST'])
 def get_portfolio_data():
