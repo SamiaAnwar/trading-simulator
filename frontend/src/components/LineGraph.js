@@ -21,7 +21,6 @@ const LineGraph = ({ data }) => {
         labels,
         datasets: [
             {
-                label: "Portfolio Value",
                 data: values,
                 borderColor: "lime",
                 backgroundColor: "rgba(75,192,192,0.2)",
@@ -34,7 +33,7 @@ const LineGraph = ({ data }) => {
         responsive: true,
         plugins: {
             legend: {
-                display: true,
+                display: false,
                 position: 'top',
                 color: 'white'
             }
