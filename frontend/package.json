@@ -17,7 +17,7 @@
   },
   "scripts": {
     "predeploy": "npm run build",
-    "deploy": "frontend -d build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "start-flask": "cd .. && cd backend && .venv/bin/flask run",
     "build": "react-scripts build",
