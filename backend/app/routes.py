@@ -16,7 +16,9 @@ supabase: Client = create_client(url, key)
 user = os.environ.get("USER_ID")
 
 app_routes = Blueprint('app_routes', __name__)
-
+@app_routes('/')
+def home():
+    return 'Hello, World!'
 @app_routes.route('/live/scheduled_update', methods=['GET', 'PUT'])
 def scheduled_update():
     #Get portfolio information 
