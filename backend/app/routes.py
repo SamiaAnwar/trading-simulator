@@ -6,6 +6,8 @@ from app.trade import portfolio_reset, execute_trade, portfolio, calculate_portf
 import os
 from supabase import create_client, Client
 from datetime import date, timedelta 
+from apscheduler.schedulers.background import BackgroundScheduler
+
 
 
 url: str = os.environ.get("SUPABASE_URL")
@@ -79,6 +81,10 @@ def scheduled_update():
         .execute()
     )
     return jsonify(portfolio)
+
+scheduler = BackgroundScheduler()
+scheduler.add_job(scheduled_update, 'interval', days=1)
+scheduler.start()
 
 @app_routes.route('/live/portfolio', methods=['GET', 'POST'])
 def get_live_portfolio():
