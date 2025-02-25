@@ -48,7 +48,7 @@ pillow==11.1.0
 platformdirs==4.3.6
 postgrest==0.19.3
 propcache==0.2.1
-psycopg2==2.9.10
+psycopg2-binary~=2.9.3
 pydantic==2.10.6
 pydantic_core==2.27.2
 PyJWT==2.10.1
