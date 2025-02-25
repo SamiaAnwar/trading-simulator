@@ -1,14 +1,18 @@
-import React, { useState, useEffect } from "react"; 
+import React, { useState, useEffect, use } from "react";
 import LineGraph from "../components/LineGraph";
 import DataTable from "../components/DataTable";
 import DoughnutGraph from "../components/DoughnutGraph";
+import { pointColors, get_attribute } from "./helpers/pointGraph";
 import axios from "axios";
 
 
 const LiveResults=() => {
     const [valuesData, setValuesData] = useState([]);
     const [tradesData, setTradesData] = useState([]); 
-    const [holdingsData, setHoldingsData] = useState([]); 
+    const [holdingsData, setHoldingsData] = useState([]);
+    // const [selectedSym, setSelectedSym] = useState(Object.keys(holdingsData)[0] || "TSLA"); 
+    // const [monthVals, setMonthVals] = useState([]); 
+    
     useEffect(() => {
         axios.get('/live/value_history').then(
             response => (
@@ -16,32 +20,51 @@ const LiveResults=() => {
             )
         ).catch(error => {
             console.error("Error fetching portfolio values data:", error);
-        }); 
+        });
         axios.get('/live/trade_history').then(
             response => (
                 setTradesData(response.data)
             )
         ).catch(error => {
             console.error("Error fetching trading data:", error);
-        }); 
+        });
         axios.get('/live/portfolio').then(
             response => (
                 setHoldingsData(response.data)
             )
         ).catch(error => {
             console.error("Error fetching holdings data:", error);
-        })
-    }, [])
+        }); 
+    }, []); 
 
+    // useEffect(() => {
+    //     axios.get(`/live/daily_prices?symbol=${selectedSym}`).then(response => (
+    //         setMonthVals(response.data)
+    //     )).catch(error => {
+    //         console.error("Error fetching daily prices of selected symbol:", error)
+    //     })
+    // }, [selectedSym]); 
+
+    // const dates = monthVals.map(item => new Date(item[1]).toLocaleDateString());
+    // const prices = monthVals.map(item => item[0]); 
+    // console.log(dates)
+    // const tradeDays = []
+    // const tradeActions = []
+    // for (let i = 0; i < tradesData.length; i++){
+    //     if (tradesData[i]['symbol'] === selectedSym) {
+    //         tradeDays.push(tradesData[i]['date']); 
+    //         tradeActions.push(tradesData[i]['action']); 
+    //     }
+    // }
+    // const tradeColors = pointColors(dates, tradeDays, tradeActions)
+    // console.log(tradeColors)
     const tradesTableData = tradesData.map(item => ({
         ...item,
         action: item.action === 1 ? "BUY" : "SELL"
       }));
-      
     const lineData = Object.values(valuesData).map(({ date, value }) => [date, value]);
-
     const doughnutData = Object.entries(holdingsData); 
-    
+
     return (
         <div className="min-h-screen bg-black p-6">
             <h1 className="text-3xl font-bold text-center text-white mb-8">
