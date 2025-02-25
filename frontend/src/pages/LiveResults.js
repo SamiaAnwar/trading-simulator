@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import LineGraph from "../components/LineGraph";
 import DataTable from "../components/DataTable";
 import DoughnutGraph from "../components/DoughnutGraph";
-// import { pointColors, get_attribute } from "./helpers/pointGraph";
 import axios from "axios";
 
 
