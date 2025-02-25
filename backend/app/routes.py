@@ -92,9 +92,10 @@ def get_trade_history():
 
 @app_routes.route('/live/daily_prices', methods=['GET', 'POST'])
 def get_daily_prices():
-    symbol = request.args.get("symbol")
-    curr_mo, dates = get_live_data(symbol, date.today() - timedelta(56), date.today())
-    return jsonify([curr_mo, dates])
+    symbol = request.args.get('symbol')
+    prices, dates = get_live_data(symbol, date.today() - timedelta(56), date.today())
+    output = [(prices.iloc[i], dates.iloc[i]) for i in range(len(prices))]
+    return jsonify(output)
 
 @app_routes.route('/backtest/portfolio_data', methods=['GET', 'POST'])
 def get_portfolio_data():
