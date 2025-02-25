@@ -19,7 +19,7 @@ app_routes = Blueprint('app_routes', __name__)
 @app_routes.route('/')
 def home():
     return 'Hello, World!'
-@app_routes.route('/live/scheduled_update', methods=['GET', 'PUT'])
+
 def scheduled_update():
     #Get portfolio information 
     pf, _ = supabase.table("Portfolio").select("*").eq("user_id", user).execute()
