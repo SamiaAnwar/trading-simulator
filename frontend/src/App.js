@@ -12,7 +12,7 @@ const App = () => {
       <Routes>
         <Route path="/backtesting/symbolselector" element={<SymbolSelection />} />
         <Route path="/backtesting/results" element={<TradingResults />} />
-        <Route path="/" element={<LiveResults/>} />
+        <Route path="/trading-simulator" element={<LiveResults/>} />
 
       </Routes>
     </Router>
