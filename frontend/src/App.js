@@ -10,9 +10,9 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<SymbolSelection />} />
-        <Route path="/backtesting" element={<TradingResults />} />
-        <Route path="/live" element={<LiveResults/>} />
+        <Route path="/backtesting/symbolselector" element={<SymbolSelection />} />
+        <Route path="/backtesting/results" element={<TradingResults />} />
+        <Route path="/" element={<LiveResults/>} />
 
       </Routes>
     </Router>
