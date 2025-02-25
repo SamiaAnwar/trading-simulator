@@ -42,29 +42,35 @@ def scheduled_update():
             action = 0 
         if action != -1 and (portfolio['stocks'][symbol] > 0 or action == 1): 
             #Add new trade to Trades
-            response = (
-                supabase.table("Trades")
-                .insert(
-                    {"user_id": user, 
-                    "symbol": symbol, 
-                    "date":today, 
-                    "price":live_prices[symbol][0], 
-                    "action": action}
-                )
-                .execute()
-                )
+            try: 
+                response = (
+                    supabase.table("Trades")
+                    .insert(
+                        {"user_id": user, 
+                        "symbol": symbol, 
+                        "date":today, 
+                        "price":live_prices[symbol][0], 
+                        "action": action}
+                    )
+                    .execute()
+                    )
+            except:
+                return "Database Up To Date"
         message = execute_trade(portfolio, symbol, decision, 1, live_prices[symbol][0])
     value = calculate_portfolio_value(portfolio, live_prices, 0)
     #Add new value to PortfolioValues 
-    response = (
-                supabase.table("PortfolioValues")
-                .insert(
-                    {"user_id": user,
-                    "date":today, 
-                    "value":value}
-                )
-                .execute()
-                )
+    try: 
+        response = (
+                    supabase.table("PortfolioValues")
+                    .insert(
+                        {"user_id": user,
+                        "date":today, 
+                        "value":value}
+                    )
+                    .execute()
+                    )
+    except:
+        return "Database Up To Date"
     #Update cash and holdings value 
     response = (
         supabase.table("Portfolio")
