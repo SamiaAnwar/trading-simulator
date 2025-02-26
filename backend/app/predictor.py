@@ -5,7 +5,7 @@ import pandas as pd
 from io import StringIO
 
 path = os.environ['HOME']
-with open( path + '/Desktop/stock-market-predictor/backend/model/predictor_model.pkl', 'rb') as f:
+with open('/app-docker/model/predictor_model.pkl', 'rb') as f:
     model = pickle.load(f)
 FEATURES = ["Close", "EMA_5", "MA_5", "Lag_2", "MA_10", "Lag_1"]
 
