@@ -13,21 +13,21 @@ const LiveResults=() => {
     // const [monthVals, setMonthVals] = useState([]); 
     
     useEffect(() => {
-        axios.get('/live/value_history').then(
+        axios.get('https://flask-docker-339189756210.us-east1.run.app/live/value_history').then(
             response => (
                 setValuesData(response.data)
             )
         ).catch(error => {
             console.error("Error fetching portfolio values data:", error);
         });
-        axios.get('/live/trade_history').then(
+        axios.get('https://flask-docker-339189756210.us-east1.run.app/live/trade_history').then(
             response => (
                 setTradesData(response.data)
             )
         ).catch(error => {
             console.error("Error fetching trading data:", error);
         });
-        axios.get('/live/portfolio').then(
+        axios.get('https://flask-docker-339189756210.us-east1.run.app/live/portfolio').then(
             response => (
                 setHoldingsData(response.data)
             )
