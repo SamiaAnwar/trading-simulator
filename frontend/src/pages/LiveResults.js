@@ -11,23 +11,24 @@ const LiveResults=() => {
     const [holdingsData, setHoldingsData] = useState([]);
     // const [selectedSym, setSelectedSym] = useState(Object.keys(holdingsData)[0] || "TSLA"); 
     // const [monthVals, setMonthVals] = useState([]); 
-    
+    axios.defaults.baseURL = 'https://flask-docker-339189756210.us-east1.run.app';
+
     useEffect(() => {
-        axios.get('https://flask-docker-339189756210.us-east1.run.app/live/value_history').then(
+        axios.get('/live/value_history').then(
             response => (
                 setValuesData(response.data)
             )
         ).catch(error => {
             console.error("Error fetching portfolio values data:", error);
         });
-        axios.get('https://flask-docker-339189756210.us-east1.run.app/live/trade_history').then(
+        axios.get('/live/trade_history').then(
             response => (
                 setTradesData(response.data)
             )
         ).catch(error => {
             console.error("Error fetching trading data:", error);
         });
-        axios.get('https://flask-docker-339189756210.us-east1.run.app/live/portfolio').then(
+        axios.get('/live/portfolio').then(
             response => (
                 setHoldingsData(response.data)
             )
@@ -42,28 +43,29 @@ const LiveResults=() => {
     //     )).catch(error => {
     //         console.error("Error fetching daily prices of selected symbol:", error)
     //     })
-    // }, [selectedSym]); 
+    // }, [selectedSym]);
 
     // const dates = monthVals.map(item => new Date(item[1]).toLocaleDateString());
-    // const prices = monthVals.map(item => item[0]); 
+    // const prices = monthVals.map(item => item[0]);
     // console.log(dates)
     // const tradeDays = []
     // const tradeActions = []
     // for (let i = 0; i < tradesData.length; i++){
     //     if (tradesData[i]['symbol'] === selectedSym) {
-    //         tradeDays.push(tradesData[i]['date']); 
-    //         tradeActions.push(tradesData[i]['action']); 
+    //         tradeDays.push(tradesData[i]['date']);
+    //         tradeActions.push(tradesData[i]['action']);
     //     }
     // }
     // const tradeColors = pointColors(dates, tradeDays, tradeActions)
     // console.log(tradeColors)
+    console.log(tradesData)
     const tradesTableData = tradesData.map(item => ({
         ...item,
         action: item.action === 1 ? "BUY" : "SELL"
       }));
     const lineData = Object.values(valuesData).map(({ date, value }) => [date, value]);
     const doughnutData = Object.entries(holdingsData); 
-
+    
     return (
         <div className="min-h-screen bg-black p-6">
             <h1 className="text-3xl font-bold text-center text-white mb-8">

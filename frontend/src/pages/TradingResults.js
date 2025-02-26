@@ -18,8 +18,10 @@ const TradingResults = () => {
   function handleSelect(symbol){
     setSelectedSym(symbol);
   };  
+
+  axios.defaults.baseURL = 'https://flask-docker-339189756210.us-east1.run.app';
   useEffect(() => {
-      axios.get(`https://flask-docker-339189756210.us-east1.run.app/backtest/trade_history?symbol=${query}`).then(response => (
+      axios.get(`/backtest/trade_history?symbol=${query}`).then(response => (
           setTradeData(response.data)
       )).catch(error => {
           console.error("Error fetching trading data:", error);
@@ -27,7 +29,7 @@ const TradingResults = () => {
   }, []); 
 
   useEffect(() => {
-    axios.get(`https://flask-docker-339189756210.us-east1.run.app/backtest/portfolio_data?symbol=${query}`).then(response => (
+    axios.get(`/backtest/portfolio_data?symbol=${query}`).then(response => (
       setPortfolioData(response.data)
     )).catch(error => {
       console.error("Error fetching portfolio data:", error);
@@ -35,7 +37,7 @@ const TradingResults = () => {
   }, [tradeData]);
   
   useEffect(() => {
-    axios.get(`https://flask-docker-339189756210.us-east1.run.app/backtest/prediction_comparison?symbol=${selectedSym}`).then(response => (
+    axios.get(`/backtest/prediction_comparison?symbol=${selectedSym}`).then(response => (
       setCompareData(response.data)
     )).catch(error => {
       console.error("Error fetching symbol:", error);

@@ -20,7 +20,7 @@ const SymbolSelection = () => {
     };
 
     const handleContinue = () => {
-        navigate('https://flask-docker-339189756210.us-east1.run.app/backtesting/results', { state: { selectedOptions } });
+        navigate('/backtesting/results', { state: { selectedOptions } });
     };
 
     return (
