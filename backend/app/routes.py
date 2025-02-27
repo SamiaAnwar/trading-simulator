@@ -18,7 +18,9 @@ user = os.environ.get("USER_ID")
 app_routes = Blueprint('app_routes', __name__)
 @app_routes.route('/')
 def home():
-    return 'Hello, World!'
+    res = 'Hello, World!'
+    res.headers.add('Access-Control-Allow-Origin', '*')
+    return res 
 @app_routes.route('/live/scheduled_update', methods=['GET', 'PUT'])
 def scheduled_update():
     #Get portfolio information 
@@ -59,7 +61,9 @@ def scheduled_update():
                     .execute()
                     )
             except:
-                return "Database Up To Date"
+                res = "Database Up To Date"
+                res.headers.add('Access-Control-Allow-Origin', '*')
+                return res
         message = execute_trade(portfolio, symbol, decision, 1, live_prices[symbol][0])
     value = calculate_portfolio_value(portfolio, live_prices, 0)
     #Add new value to PortfolioValues 
@@ -74,7 +78,9 @@ def scheduled_update():
                     .execute()
                     )
     except:
-        return "Database Up To Date"
+        res = "Database Up To Date"
+        res.headers.add('Access-Control-Allow-Origin', '*')
+        return res
     #Update cash and holdings value 
     response = (
         supabase.table("Portfolio")
@@ -82,7 +88,9 @@ def scheduled_update():
         .eq("user_id", user)
         .execute()
     )
-    return jsonify(portfolio)
+    res = jsonify(portfolio)
+    res.headers.add('Access-Control-Allow-Origin', '*')
+    return res
 
 scheduler = BackgroundScheduler()
 scheduler.add_job(scheduled_update, 'interval', days=1)
@@ -92,39 +100,51 @@ scheduler.start()
 def get_live_portfolio():
     portfolio, _ = supabase.table("Portfolio").select("*").eq("user_id", user).execute()
     holdings = portfolio[1][0]['holdings']
+    holdings.headers.add('Access-Control-Allow-Origin', '*')
     return holdings
 
 @app_routes.route('/live/value_history', methods=['GET', 'POST'])
 def get_value_history():
     values, _ = supabase.table("PortfolioValues").select("value, date").eq("user_id", user).execute()
-    return jsonify(values[1])
+    res = jsonify(values[1])
+    res.headers.add('Access-Control-Allow-Origin', '*')
+    return res
 
 @app_routes.route('/live/trade_history', methods=['GET', 'POST'])
 def get_trade_history():
     trades, _ = supabase.table("Trades").select("symbol, date, price, action").eq("user_id", user).execute()
-    return jsonify(trades[1])
+    res = jsonify(trades[1])
+    res.headers.add('Access-Control-Allow-Origin', '*')
+    return res
 
 @app_routes.route('/live/daily_prices', methods=['GET', 'POST'])
 def get_daily_prices():
     symbol = request.args.get('symbol')
     prices, dates = get_live_data(symbol, date.today() - timedelta(56), date.today())
     output = [(prices.iloc[i], dates.iloc[i]) for i in range(len(prices))]
-    return jsonify(output)
+    res = jsonify(output)
+    res.headers.add('Access-Control-Allow-Origin', '*')
+    return res
 
 @app_routes.route('/backtest/portfolio_data', methods=['GET', 'POST'])
 def get_portfolio_data():
     symbols = request.args.getlist('symbol', type=str)
     portfolio = portfolio_value(symbols)
-    return jsonify(portfolio)
+    res = jsonify(portfolio)
+    res.headers.add('Access-Control-Allow-Origin', '*')
+    return res
 
 @app_routes.route('/backtest/trade_history', methods=['GET', 'POST'])
 def get_trade_data():
     symbols = request.args.getlist('symbol', type=str)
-    trade_history = trades(symbols)
-    return jsonify(trade_history)
+    res = trades(symbols)
+    res.headers.add('Access-Control-Allow-Origin', '*')
+    return res
 
 @app_routes.route('/backtest/prediction_comparison', methods=['GET', 'POST'])
 def prediction_comparison():
     symbol = request.args.get('symbol', type=str)
     predictions = compare_predictions(symbol)
-    return jsonify(predictions)
+    res = jsonify(predictions)
+    res.headers.add('Access-Control-Allow-Origin', '*')
+    return res
