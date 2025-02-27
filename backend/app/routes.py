@@ -99,7 +99,7 @@ scheduler.start()
 @app_routes.route('/live/portfolio', methods=['GET', 'POST'])
 def get_live_portfolio():
     portfolio, _ = supabase.table("Portfolio").select("*").eq("user_id", user).execute()
-    holdings = portfolio[1][0]['holdings']
+    holdings = jsonify(portfolio[1][0]['holdings'])
     holdings.headers.add('Access-Control-Allow-Origin', '*')
     return holdings
 
