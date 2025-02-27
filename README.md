@@ -1,4 +1,4 @@
-# stock-market-predictor
+# trading-simulator
 
 ## Objective
 The objective of this project is to create a tool which can aid in demystifying the statistical element of stock market prices to make trading more accessible to the average earner. 
