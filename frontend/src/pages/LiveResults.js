@@ -11,7 +11,7 @@ const LiveResults=() => {
     const [holdingsData, setHoldingsData] = useState([]);
     // const [selectedSym, setSelectedSym] = useState(Object.keys(holdingsData)[0] || "TSLA"); 
     // const [monthVals, setMonthVals] = useState([]); 
-    axios.defaults.baseURL = 'https://flask-docker-339189756210.us-east1.run.app';
+    axios.defaults.baseURL = 'https://trade-sim-flask-docker-339189756210.us-east1.run.app';
 
     useEffect(() => {
         axios.get('/live/value_history').then(

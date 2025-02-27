@@ -19,7 +19,7 @@ const TradingResults = () => {
     setSelectedSym(symbol);
   };  
 
-  axios.defaults.baseURL = 'https://flask-docker-339189756210.us-east1.run.app';
+  axios.defaults.baseURL = 'https://trade-sim-flask-docker-339189756210.us-east1.run.app';
   useEffect(() => {
       axios.get(`/backtest/trade_history?symbol=${query}`).then(response => (
           setTradeData(response.data)
