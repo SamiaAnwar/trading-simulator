@@ -19,7 +19,7 @@ app_routes = Blueprint('app_routes', __name__)
 @app_routes.route('/')
 def home():
     res = 'Hello, World!'
-    res.headers.add('Access-Control-Allow-Origin', '*')
+    #res.headers.add('Access-Control-Allow-Origin', '*')
     return res 
 @app_routes.route('/live/scheduled_update', methods=['GET', 'PUT'])
 def scheduled_update():
@@ -62,7 +62,7 @@ def scheduled_update():
                     )
             except:
                 res = "Database Up To Date"
-                res.headers.add('Access-Control-Allow-Origin', '*')
+                #res.headers.add('Access-Control-Allow-Origin', '*')
                 return res
         message = execute_trade(portfolio, symbol, decision, 1, live_prices[symbol][0])
     value = calculate_portfolio_value(portfolio, live_prices, 0)
@@ -79,7 +79,7 @@ def scheduled_update():
                     )
     except:
         res = "Database Up To Date"
-        res.headers.add('Access-Control-Allow-Origin', '*')
+        #res.headers.add('Access-Control-Allow-Origin', '*')
         return res
     #Update cash and holdings value 
     response = (
