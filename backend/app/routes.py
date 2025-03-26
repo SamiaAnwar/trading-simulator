@@ -6,7 +6,7 @@ from app.trade import portfolio_reset, execute_trade, portfolio, calculate_portf
 import os
 from supabase import create_client, Client
 from datetime import date, timedelta 
-from apscheduler.schedulers.background import BackgroundScheduler
+#from apscheduler.schedulers.background import BackgroundScheduler
 
 
 
@@ -14,6 +14,7 @@ url: str = os.environ.get("SUPABASE_URL")
 key: str = os.environ.get("SUPABASE_KEY")
 supabase: Client = create_client(url, key)
 user = os.environ.get("USER_ID")
+#scheduler = BackgroundScheduler()
 
 app_routes = Blueprint('app_routes', __name__)
 @app_routes.route('/')
@@ -91,10 +92,6 @@ def scheduled_update():
     res = jsonify(portfolio)
     res.headers.add('Access-Control-Allow-Origin', '*')
     return res
-
-scheduler = BackgroundScheduler()
-scheduler.add_job(scheduled_update, 'interval', days=1)
-scheduler.start()
 
 @app_routes.route('/live/portfolio', methods=['GET', 'POST'])
 def get_live_portfolio():
