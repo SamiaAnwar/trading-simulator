@@ -18,7 +18,7 @@ cycler==0.12.1
 deprecation==2.1.0
 disutils==1.4.32.post2
 exceptiongroup==1.2.2
-Flask==3.1.0
+Flask==3.1.1
 Flask-RESTful==0.3.10
 fonttools==4.61.0
 frozendict==2.4.6
